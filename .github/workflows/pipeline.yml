@@ -33,17 +33,35 @@ jobs:
     - name: Pull dataset from DVC
       run: dvc pull
 
+    - name: Generate dataset info
+      run: |
+        python - <<EOF
+import pandas as pd, json
+df = pd.read_csv("data/housing.csv")
+
+info = {
+    "dataset_rows": int(len(df)),
+    "dataset_columns": int(len(df.columns))
+}
+
+with open("dataset_info.json","w") as f:
+    json.dump(info,f)
+
+print(info)
+EOF
+
     - name: Train model
       run: python src/train.py
 
-    - name: Upload metrics artifact
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: metrics
-        path: metrics.json
+        name: ml-results
+        path: |
+          metrics.json
+          dataset_info.json
 
     - name: Check model improvement
-      id: check_metrics
       run: |
         echo "MODEL_IMPROVED=true" >> $GITHUB_ENV
 
