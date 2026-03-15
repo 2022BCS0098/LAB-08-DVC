@@ -1,6 +1,5 @@
 import pandas as pd
 import json
-
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import root_mean_squared_error, r2_score
