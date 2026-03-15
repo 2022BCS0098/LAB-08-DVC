@@ -1,4 +1,4 @@
 [core]
-    remote = s3remote
+    remote = s3remote_2022bcs0098
 ['remote "s3remote"']
     url = s3://2022bcs98-mlops-kushal
